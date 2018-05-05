@@ -2,7 +2,7 @@
   "name": "Twitter Publish",
   "version": "0.0.1",
   "type": "flogo:activity",
-  "ref": "github.com/adireddevil/Flogo-twitter",
+  "ref": "github.com/DipeshTest/publishtweet",
   "description": "This activity allows you to publish using your twitter id",
   "author": "AllStars",
   "inputs":[
