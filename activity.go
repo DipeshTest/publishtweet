@@ -161,6 +161,12 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 					code, msg = Twitter.DirectMessage(consumerKey, consumerSecret, accessToken, accessTokenSecret, directmsg, user)
 				}
 			}
+
+		default:
+			{
+				code = 105
+				msg = "Method field cannot be blank"
+			}
 		}
 
 		context.SetOutput("statusCode", code)
