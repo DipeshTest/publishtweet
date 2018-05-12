@@ -165,7 +165,7 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 		default:
 			{
 				code = 105
-				msg = "Method field cannot be blank"
+				msg = "TwitterFunction field cannot be blank"
 			}
 		}
 
