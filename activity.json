@@ -1,70 +1,57 @@
 {
-  "name": "Twitter Publish",
-  "version": "0.0.1",
-  "type": "flogo:activity",
-  "ref": "github.com/DipeshTest/publishtweet",
-  "description": "This activity allows you to publish using your twitter id",
-  "author": "AllStars",
-  "inputs":[
-    {
+	"name": "Twitter Publish",
+	"version": "0.0.1",
+	"type": "flogo:activity",
+	"ref": "github.com/DipeshTest/publishtweet",
+	"description": "This activity allows you to publish using your twitter id",
+	"author": "AllStars",
+	"inputs": [{
 		"name": "consumerKey",
 		"type": "string",
-    "required": true
+		"required": true
 	},
 	{
 		"name": "consumerSecret",
 		"type": "string",
-      "required": true
-
+		"required": true
 	},
 	{
 		"name": "accessToken",
 		"type": "string",
-      "required": true
-
+		"required": true
 	},
 	{
 		"name": "accessTokenSecret",
 		"type": "string",
-      "required": true
-
-	}, {
+		"required": true
+	},
+	{
 		"name": "twitterFunction",
 		"type": "string",
-    "allowed": [
-        "Tweet",
-        "ReTweet",
+		"allowed": ["Tweet",
+		"ReTweet",
 		"Block",
 		"Unblock",
 		"Follow",
 		"Unfollow",
-    "DM"
-      ],
-      "value": "Tweet",
-      "required": true
+		"DM"],
+		"value": "Tweet",
+		"required": true
 	},
-    {
-      "name": "user",
-      "type": "string"
-
-
-    },
+	{
+		"name": "user",
+		"type": "string"
+	},
 	{
 		"name": "text",
 		"type": "string"
-
-
-	}
-
-  ],
-  "outputs": [
-    {
-      "name": "statusCode",
-      "type": "string"
-    },
-    {
-      "name": "message",
-      "type": "any"
-    }
-  ]
+	}],
+	"outputs": [{
+		"name": "statusCode",
+		"type": "string"
+	},
+	{
+		"name": "message",
+		"type": "any"
+	}]
 }
