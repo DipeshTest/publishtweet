@@ -5,7 +5,7 @@ import (
 	"strconv"
 	s "strings"
 
-	"github.com/JayDShah/TwitterAPI"
+	"github.com/DipeshTest/allstarsshared/twitter"
 	"github.com/TIBCOSoftware/flogo-lib/core/activity"
 	"github.com/TIBCOSoftware/flogo-lib/logger"
 )
@@ -74,7 +74,7 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 					msg = "Tweet cannot be blank"
 
 				} else {
-					code, msg = Twitter.PostTweet(consumerKey, consumerSecret, accessToken, accessTokenSecret, tweet)
+					code, msg = twitter.PostTweet(consumerKey, consumerSecret, accessToken, accessTokenSecret, tweet)
 				}
 			}
 		case "ReTweet":
@@ -90,7 +90,7 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 					value, err := strconv.Atoi(tid)
 
 					if err == nil {
-						code, msg = Twitter.ReTweet(consumerKey, consumerSecret, accessToken, accessTokenSecret, int64(value))
+						code, msg = twitter.ReTweet(consumerKey, consumerSecret, accessToken, accessTokenSecret, int64(value))
 					} else {
 						code = 1001
 						msg = err.Error()
@@ -106,7 +106,7 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 					msg = "Block user field cannot be blank"
 
 				} else {
-					code, msg = Twitter.BlockUser(consumerKey, consumerSecret, accessToken, accessTokenSecret, user)
+					code, msg = twitter.BlockUser(consumerKey, consumerSecret, accessToken, accessTokenSecret, user)
 				}
 			}
 		case "Unblock":
@@ -118,7 +118,7 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 					msg = "UnBlock user field cannot be blank"
 
 				} else {
-					code, msg = Twitter.UnBlockUser(consumerKey, consumerSecret, accessToken, accessTokenSecret, user)
+					code, msg = twitter.UnBlockUser(consumerKey, consumerSecret, accessToken, accessTokenSecret, user)
 				}
 			}
 		case "Follow":
@@ -130,7 +130,7 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 					msg = "Follow user field cannot be blank"
 
 				} else {
-					code, msg = Twitter.Follow(consumerKey, consumerSecret, accessToken, accessTokenSecret, user)
+					code, msg = twitter.Follow(consumerKey, consumerSecret, accessToken, accessTokenSecret, user)
 				}
 			}
 		case "Unfollow":
@@ -142,7 +142,7 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 					msg = "UnFollow user field cannot be blank"
 
 				} else {
-					code, msg = Twitter.UnFollow(consumerKey, consumerSecret, accessToken, accessTokenSecret, user)
+					code, msg = twitter.UnFollow(consumerKey, consumerSecret, accessToken, accessTokenSecret, user)
 				}
 			}
 		case "DM":
@@ -158,7 +158,7 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 					msg = "User or Text field cannot be blank"
 
 				} else {
-					code, msg = Twitter.DirectMessage(consumerKey, consumerSecret, accessToken, accessTokenSecret, directmsg, user)
+					code, msg = twitter.DirectMessage(consumerKey, consumerSecret, accessToken, accessTokenSecret, directmsg, user)
 				}
 			}
 
