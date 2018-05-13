@@ -85,7 +85,7 @@ Please refer activity_test.go
 
 
 ## Response Codes
-### Google Drive Create
+### Publish Tweet
 | ResponseCode     | Type | Description |
 |:------------|:---------|:------------|
 |200 |OK| The request operation was successful.|
@@ -94,4 +94,5 @@ Please refer activity_test.go
 |103 |INVALID INPUT| Access Token field is blank.|
 |104 |INVALID INPUT| Access Token Secret field is blank.|
 |105 |AUTHENTICATION ERROR| User Field is blank for Tweet or User field is blank for TweetId/Block user/UnBlock user/Follow user/Unfollow user.|
-Refer : https://developer.twitter.com/en/docs/basics/response-codes for additional Response codes
+
+#Refer : https://developer.twitter.com/en/docs/basics/response-codes for additional Response codes
