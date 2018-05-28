@@ -1,0 +1,75 @@
+{
+	"name": "Twitter Publish",
+    "version": "0.0.2",
+    "title": "Twitter Publish",
+    "author": "TIBCO Software Inc. [AllStars]",
+    "type": "flogo:activity",
+     
+    "display": {
+       "category": "Twitter",
+       "visible": true,
+       "smallIcon": "icons/ic-twitter.png",
+       "largeIcon": "icons/ic-twitter@2x.png",
+       "description": "Activity to publish Twitter Messages and more"
+    },
+	
+	"ref": "github.com/DipeshTest/publishtweet/activity/tweet",
+	"inputs": [{
+		"name": "consumerKey",
+		"type": "string",
+		"required": true
+	},
+	{
+		"name": "consumerSecret",
+		"type": "string",
+		"required": true
+	},
+	{
+		"name": "accessToken",
+		"type": "string",
+		"required": true
+	},
+	{
+		"name": "accessTokenSecret",
+		"type": "string",
+		"required": true
+	},
+	{
+		"name": "twitterFunction",
+		"type": "string",
+		"allowed": ["Tweet",
+			"TweetMedia",
+			"ReTweet",
+			"Block",
+			"Unblock",
+			"Follow",
+			"Unfollow",
+			"DM"],
+		"value": "Tweet",
+		"required": true,
+		"display":{
+			"name": "Twitter Function",
+			"description": "Twitter Function to execute in this Activity"
+		  }
+	},
+	{
+		"name": "user",
+		"type": "string"
+	},
+	{
+		"name": "text",
+		"type": "string"
+	},
+	{
+		"name": "mediaURL",
+		"type": "string"
+	}],
+	"outputs": [{
+		"name": "statusCode",
+		"type": "integer"
+	},
+	{
+		"name": "message",
+		"type": "any"
+	}]
+}

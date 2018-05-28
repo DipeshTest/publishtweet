@@ -1,11 +1,9 @@
 package publishtweet
 
 import (
-	"fmt"
 	"strconv"
 	s "strings"
 
-	"github.com/DipeshTest/allstarsshared/twitter"
 	"github.com/TIBCOSoftware/flogo-lib/core/activity"
 	"github.com/TIBCOSoftware/flogo-lib/logger"
 )
@@ -15,7 +13,7 @@ type MyActivity struct {
 	metadata *activity.Metadata
 }
 
-var log = logger.GetLogger("activity-twitterpublish")
+var activityLog = logger.GetLogger("activity-twitterpublish")
 
 // NewActivity creates a new activity
 func NewActivity(metadata *activity.Metadata) activity.Activity {
@@ -29,6 +27,7 @@ func (a *MyActivity) Metadata() *activity.Metadata {
 
 // Eval implements activity.Activity.Eval
 func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
+	activityLog.Info("Executing Twitter activity")
 
 	consumerKey := s.TrimSpace(context.GetInput("consumerKey").(string))
 	consumerSecret := s.TrimSpace(context.GetInput("consumerSecret").(string))
@@ -36,28 +35,26 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 	accessTokenSecret := s.TrimSpace(context.GetInput("accessTokenSecret").(string))
 
 	twitterFunction := context.GetInput("twitterFunction").(string)
-	fmt.Println("test ", twitterFunction)
+	activityLog.Info("Twitter Function: " + twitterFunction)
+
 	if len(consumerKey) == 0 {
 
-		context.SetOutput("statusCode", "101")
-
+		context.SetOutput("statusCode", 101)
 		context.SetOutput("message", "Consumer Key field is blank")
+
 	} else if len(consumerSecret) == 0 {
 
-		context.SetOutput("statusCode", "102")
-
+		context.SetOutput("statusCode", 102)
 		context.SetOutput("message", "Consumer Secret field is blank")
 
 	} else if len(accessToken) == 0 {
 
-		context.SetOutput("statusCode", "103")
-
+		context.SetOutput("statusCode", 103)
 		context.SetOutput("message", "Access Token field is blank")
 
 	} else if len(accessTokenSecret) == 0 {
 
-		context.SetOutput("statusCode", "104")
-
+		context.SetOutput("statusCode", 104)
 		context.SetOutput("message", "Access Token Secret field is blank")
 
 	} else {
@@ -74,7 +71,20 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 					msg = "Tweet cannot be blank"
 
 				} else {
-					code, msg = twitter.PostTweet(consumerKey, consumerSecret, accessToken, accessTokenSecret, tweet)
+					code, msg = PostTweet(consumerKey, consumerSecret, accessToken, accessTokenSecret, tweet)
+				}
+			}
+		case "TweetMedia":
+			{
+				tweet := s.TrimSpace(context.GetInput("text").(string))
+				mediaURL := s.TrimSpace(context.GetInput("mediaURL").(string))
+				if len(tweet) == 0 || len(mediaURL) == 0 {
+
+					code = 105
+					msg = "Tweet Text and/or Media URL cannot be blank"
+
+				} else {
+					code, msg = PostTweetMedia(consumerKey, consumerSecret, accessToken, accessTokenSecret, tweet, mediaURL)
 				}
 			}
 		case "ReTweet":
@@ -90,7 +100,7 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 					value, err := strconv.Atoi(tid)
 
 					if err == nil {
-						code, msg = twitter.ReTweet(consumerKey, consumerSecret, accessToken, accessTokenSecret, int64(value))
+						code, msg = ReTweet(consumerKey, consumerSecret, accessToken, accessTokenSecret, int64(value))
 					} else {
 						code = 1001
 						msg = err.Error()
@@ -106,7 +116,7 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 					msg = "Block user field cannot be blank"
 
 				} else {
-					code, msg = twitter.BlockUser(consumerKey, consumerSecret, accessToken, accessTokenSecret, user)
+					code, msg = BlockUser(consumerKey, consumerSecret, accessToken, accessTokenSecret, user)
 				}
 			}
 		case "Unblock":
@@ -118,7 +128,7 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 					msg = "UnBlock user field cannot be blank"
 
 				} else {
-					code, msg = twitter.UnBlockUser(consumerKey, consumerSecret, accessToken, accessTokenSecret, user)
+					code, msg = UnBlockUser(consumerKey, consumerSecret, accessToken, accessTokenSecret, user)
 				}
 			}
 		case "Follow":
@@ -130,7 +140,7 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 					msg = "Follow user field cannot be blank"
 
 				} else {
-					code, msg = twitter.Follow(consumerKey, consumerSecret, accessToken, accessTokenSecret, user)
+					code, msg = Follow(consumerKey, consumerSecret, accessToken, accessTokenSecret, user)
 				}
 			}
 		case "Unfollow":
@@ -142,7 +152,7 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 					msg = "UnFollow user field cannot be blank"
 
 				} else {
-					code, msg = twitter.UnFollow(consumerKey, consumerSecret, accessToken, accessTokenSecret, user)
+					code, msg = UnFollow(consumerKey, consumerSecret, accessToken, accessTokenSecret, user)
 				}
 			}
 		case "DM":
@@ -150,15 +160,12 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 				user := s.TrimSpace(context.GetInput("user").(string))
 				directmsg := s.TrimSpace(context.GetInput("text").(string))
 				if len(user) == 0 || len(directmsg) == 0 {
-					context.SetOutput("statusCode", "105")
-
-					context.SetOutput("message", "User or Text field cannot be blank")
 
 					code = 105
 					msg = "User or Text field cannot be blank"
 
 				} else {
-					code, msg = twitter.DirectMessage(consumerKey, consumerSecret, accessToken, accessTokenSecret, directmsg, user)
+					code, msg = DirectMessage(consumerKey, consumerSecret, accessToken, accessTokenSecret, directmsg, user)
 				}
 			}
 
@@ -169,8 +176,9 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 			}
 		}
 
-		context.SetOutput("statusCode", code)
+		activityLog.Info("Twitter Activity executed with Status Code: " + strconv.Itoa(code))
 
+		context.SetOutput("statusCode", code)
 		context.SetOutput("message", msg)
 	}
 
