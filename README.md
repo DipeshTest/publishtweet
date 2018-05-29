@@ -4,7 +4,7 @@ weight: 1
 ---
 
 # Publish Tweet
-This activity allows you to Tweet, Retweet a particular tweet you like,Follow/UnFollow user on Twitter,,Block/Unblock user on Twitter,DirectMessage a user on Twitter,GetUserTimeline, get your timeline,GetTrendsByPlace for a particular woeid(where on earth id).This activity is developed by FLOGO AllStars team.
+This activity allows you to Tweet, Tweet with Media, Retweet a particular tweet you like, Follow/UnFollow user on Twitter, Block/Unblock user on Twitter, DirectMessage a user on Twitter, GetUserTimeline, get your timeline, GetTrendsByPlace for a particular woeid (where on earth id). This activity is developed by FLOGO AllStars team.
 
 ## Installation
 ### Flogo CLI
@@ -46,6 +46,7 @@ Inputs and Outputs:
 		"name": "twitterFunction",
 		"type": "string",
 		"allowed": ["Tweet",
+		"TweetMedia",
 		"ReTweet",
 		"Block",
 		"Unblock",
