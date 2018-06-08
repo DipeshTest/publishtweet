@@ -4,16 +4,20 @@ weight: 1
 ---
 
 # Publish Tweet
-This activity allows you to Tweet, Retweet a particular tweet you like,Follow/UnFollow user on Twitter,,Block/Unblock user on Twitter,DirectMessage a user on Twitter,GetUserTimeline, get your timeline,GetTrendsByPlace for a particular woeid(where on earth id).This activity is developed by FLOGO AllStars team.
+This activity allows you to Tweet, Tweet with Media, Retweet a particular tweet you like, Follow/UnFollow user on Twitter, Block/Unblock user on Twitter, DirectMessage a user on Twitter, GetUserTimeline, get your timeline, GetTrendsByPlace for a particular woeid (where on earth id). This activity is developed by FLOGO AllStars team.
+
 ## Installation
 ### Flogo CLI
 ```bash
 flogo install github.com/DipeshTest/publishtweet
 ```
+### TIBCO Cloud Integration
+upload via WebUI
 
 ### Third-party libraries used
 - #### package anaconda - "github.com/ChimeraCoder/anaconda":
 	Anaconda is a simple, transparent Go package for accessing version 1.1 of the Twitter API.Successful API queries return native Go structs that can be used immediately, with no need for type assertions
+
 ## Schema
 Inputs and Outputs:
 
@@ -42,6 +46,7 @@ Inputs and Outputs:
 		"name": "twitterFunction",
 		"type": "string",
 		"allowed": ["Tweet",
+		"TweetMedia",
 		"ReTweet",
 		"Block",
 		"Unblock",
@@ -58,10 +63,14 @@ Inputs and Outputs:
 	{
 		"name": "text",
 		"type": "string"
+	},
+	{
+		"name": "mediaURL",
+		"type": "string"
 	}],
 	"outputs": [{
 		"name": "statusCode",
-		"type": "string"
+		"type": "integer"
 	},
 	{
 		"name": "message",
@@ -69,20 +78,32 @@ Inputs and Outputs:
 	}]
 ```
 ## Settings
-| Setting     | Required | Description |
-|:------------|:---------|:------------|
-| consumerKey | True     | The consumerKey of your Twitter account |         
-| consumerSecret   | True    | The consumerSecret of your Twitter account|
-| accessToken       | True    | The accessToken of your Twitter account |
-| accessTokenSecret   | True    | The accessTokenSecret of your Twitter account|
-| twitterFunction   | True    | Select the action you want to perform using the PublishTweet connector, the possible values are "Tweet","ReTweet","Block","Unblock","Follow","Unfollow","DM"|
-| user   | False    | Use this field to provide tweetId for ReTweet, userHandle for Block,UnBlock,Follow,UnFollow,DirectMessage(DM)|
-|text|False| Use this field to provide text for you Tweet,message for you DM|
+| Setting           | Required  | Description                         |
+|:------------------|:----------|:------------------------------------|
+| consumerKey       | true      | consumerKey of your Twitter account |         
+| consumerSecret    | true      | consumerSecret of your Twitter account |
+| accessToken       | true      | accessToken of your Twitter account |
+| accessTokenSecret | true      | accessTokenSecret of your Twitter account |
+| Function          | true      | Actions you want to perform, the possible values are "Tweet", "TweetMedia","ReTweet","Block","Unblock","Follow","Unfollow","DirectMessage" |
+| User              | false     | Use this field to provide tweetId for ReTweet, User for Block, UnBlock, Follow, UnFollow, DirectMessage |
+| Text              | false     | Use this field to provide an text for you Tweet or Direct Message |
+| MediaURL          | false     | Use this field to provide an external Image Media URL |
 
 Note: You may use below URL to generate your Twitter tokens: https://www.slickremix.com/docs/how-to-get-api-keys-and-tokens-for-twitter/
-## Examples
+
+## Examples & Tester
 Please refer activity_test.go 
 
+Tester read secure Test Properties, to store them outside any GitHub
+feel free to adjust Path and enter your Keys. Tokens and Secrets
+File Content Should look like follows:
+- consumerKey=[your consumerKey]
+- consumerSecret=[your consumerSecret]
+- accessToken=[your accessToken]
+- accessTokenSecret=[your accessTokenSecret]
+
+Note: path need to be adjusted to your Properties File:
+- c:\\GODev\\twitterApp.properties
 
 ## Response Codes
 ### Publish Tweet
